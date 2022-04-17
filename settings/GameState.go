@@ -1,6 +1,6 @@
 package settings
 
-import . "RtsGame/components"
+import . "TowerDefenseTalosEcs/components"
 
 var BuildingMakers []BuildData
 

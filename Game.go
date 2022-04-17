@@ -1,11 +1,11 @@
 package main
 
 import (
-	"RtsGame/engine"
-	"RtsGame/engine/render"
-	"RtsGame/settings"
-	"RtsGame/systems"
-	"RtsGame/ui"
+	"TowerDefenseTalosEcs/engine"
+	"TowerDefenseTalosEcs/engine/render"
+	"TowerDefenseTalosEcs/settings"
+	"TowerDefenseTalosEcs/systems"
+	"TowerDefenseTalosEcs/ui"
 	ecs "github.com/OlegDzhuraev/talosecs"
 	rl "github.com/gen2brain/raylib-go/raylib"
 	"math/rand"

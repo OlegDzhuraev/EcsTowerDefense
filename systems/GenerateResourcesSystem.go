@@ -1,7 +1,7 @@
 package systems
 
 import (
-	. "RtsGame/entities"
+	. "TowerDefenseTalosEcs/entities"
 	"github.com/aquilax/go-perlin"
 	rl "github.com/gen2brain/raylib-go/raylib"
 	"math/rand"

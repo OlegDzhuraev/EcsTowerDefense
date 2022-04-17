@@ -1,9 +1,6 @@
 package systems
 
 import (
-	. "RtsGame/engine"
-	. "RtsGame/engine/render"
-	. "RtsGame/signals"
 	ecs "github.com/OlegDzhuraev/talosecs"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )

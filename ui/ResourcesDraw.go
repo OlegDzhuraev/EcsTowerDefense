@@ -1,7 +1,7 @@
 package ui
 
 import (
-	. "RtsGame/settings"
+	. "TowerDefenseTalosEcs/settings"
 	rl "github.com/gen2brain/raylib-go/raylib"
 	"strconv"
 )

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"RtsGame/entities"
-	"RtsGame/systems"
+	"TowerDefenseTalosEcs/entities"
+	"TowerDefenseTalosEcs/systems"
 	"github.com/OlegDzhuraev/talosecs"
 	"testing"
 )

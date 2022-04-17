@@ -1,10 +1,10 @@
 package ui
 
 import (
-	. "RtsGame/components"
-	. "RtsGame/engine"
-	"RtsGame/settings"
-	"RtsGame/tags"
+	. "TowerDefenseTalosEcs/components"
+	. "TowerDefenseTalosEcs/engine"
+	"TowerDefenseTalosEcs/settings"
+	"TowerDefenseTalosEcs/tags"
 	. "github.com/OlegDzhuraev/talosecs"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )

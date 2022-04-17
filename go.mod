@@ -1,4 +1,4 @@
-module RtsGame
+module TowerDefenseTalosEcs
 
 go 1.18
 

@@ -1,7 +1,7 @@
 package ui
 
 import (
-	"RtsGame/settings"
+	"TowerDefenseTalosEcs/settings"
 	rl "github.com/gen2brain/raylib-go/raylib"
 	"strconv"
 )
@@ -20,7 +20,7 @@ func (system *GameRulesDrawSystem) Init() {
 
 func (system *GameRulesDrawSystem) Update() {
 	isAnyState := settings.GameOver || settings.GameWin
-	
+
 	if isAnyState {
 		posX := system.centerX - 128
 		posY := system.centerY - 64

@@ -1,7 +1,7 @@
 package render
 
 import (
-	"RtsGame/engine"
+	"TowerDefenseTalosEcs/engine"
 	"github.com/OlegDzhuraev/talosecs"
 )
 

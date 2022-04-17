@@ -1,10 +1,10 @@
 package systems
 
 import (
-	. "RtsGame/components"
-	. "RtsGame/entities"
-	. "RtsGame/settings"
-	. "RtsGame/tags"
+	. "TowerDefenseTalosEcs/components"
+	. "TowerDefenseTalosEcs/entities"
+	. "TowerDefenseTalosEcs/settings"
+	. "TowerDefenseTalosEcs/tags"
 	ecs "github.com/OlegDzhuraev/talosecs"
 )
 

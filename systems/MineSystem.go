@@ -1,11 +1,11 @@
 package systems
 
 import (
-	. "RtsGame/components"
-	"RtsGame/engine"
-	"RtsGame/engine/render"
-	"RtsGame/entities"
-	"RtsGame/settings"
+	. "TowerDefenseTalosEcs/components"
+	"TowerDefenseTalosEcs/engine"
+	"TowerDefenseTalosEcs/engine/render"
+	"TowerDefenseTalosEcs/entities"
+	"TowerDefenseTalosEcs/settings"
 	. "github.com/OlegDzhuraev/talosecs"
 	rl "github.com/gen2brain/raylib-go/raylib"
 	"math"

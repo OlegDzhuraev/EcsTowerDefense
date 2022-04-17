@@ -1,7 +1,7 @@
 package render
 
 import (
-	"RtsGame/engine"
+	"TowerDefenseTalosEcs/engine"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 

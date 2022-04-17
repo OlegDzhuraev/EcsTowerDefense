@@ -1,8 +1,8 @@
 package systems
 
 import (
-	. "RtsGame/components"
-	"RtsGame/settings"
+	. "TowerDefenseTalosEcs/components"
+	"TowerDefenseTalosEcs/settings"
 	. "github.com/OlegDzhuraev/talosecs"
 )
 

@@ -1,10 +1,10 @@
 package entities
 
 import (
-	. "RtsGame/components"
-	. "RtsGame/engine"
-	. "RtsGame/engine/render"
-	. "RtsGame/tags"
+	. "TowerDefenseTalosEcs/components"
+	. "TowerDefenseTalosEcs/engine"
+	. "TowerDefenseTalosEcs/engine/render"
+	. "TowerDefenseTalosEcs/tags"
 	. "github.com/OlegDzhuraev/talosecs"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
