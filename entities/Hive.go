@@ -15,7 +15,7 @@ func NewHive(pos rl.Vector3) ecs.Entity {
 	tr.Scale = rl.Vector3{X: 2, Y: 2, Z: 2}
 
 	e.Add(tr)
-	e.Add(&Hive{})
+	e.Add(&HiveTag{})
 	e.Add(&ScoreForDestroy{Score: 1000})
 	e.Add(&Damageable{MaxHealth: 300, Health: 300})
 	e.Add(&ModelRenderer{Color: rl.Red, Model: MakeSphereModel()})

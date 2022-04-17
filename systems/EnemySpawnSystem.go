@@ -1,10 +1,10 @@
 package systems
 
 import (
-	"TowerDefenseTalosEcs/components"
 	. "TowerDefenseTalosEcs/engine"
 	. "TowerDefenseTalosEcs/entities"
 	"TowerDefenseTalosEcs/signals"
+	"TowerDefenseTalosEcs/tags"
 	ecs "github.com/OlegDzhuraev/talosecs"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
@@ -26,7 +26,7 @@ func (system *EnemySpawnSystem) Update() {
 	system.Timer.DoTickUntilReady()
 
 	if system.Timer.IsReady() {
-		hives, transforms := ecs.FilterWith2[*components.Hive, *Transform]()
+		hives, transforms := ecs.FilterWith2[*tags.HiveTag, *Transform]()
 
 		var hivesAmount int32 = 0
 		var newActualHive int32 = 0

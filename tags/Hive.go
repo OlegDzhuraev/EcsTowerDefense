@@ -1,7 +1,7 @@
-package components
+package tags
 
 import ecs "github.com/OlegDzhuraev/talosecs"
 
-type Hive struct {
+type HiveTag struct {
 	ecs.Tag
 }

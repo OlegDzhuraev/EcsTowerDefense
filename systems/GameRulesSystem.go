@@ -52,7 +52,7 @@ func (system *GameRulesSystem) Update() {
 		}
 	}
 
-	hives := ecs.FilterWith[*Hive]()
+	hives := ecs.FilterWith[*HiveTag]()
 
 	isAnyHiveAlive := false
 	for range hives {
