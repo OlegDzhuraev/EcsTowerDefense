@@ -1,6 +1,9 @@
 package systems
 
 import (
+	. "TowerDefenseTalosEcs/engine"
+	. "TowerDefenseTalosEcs/engine/render"
+	. "TowerDefenseTalosEcs/signals"
 	ecs "github.com/OlegDzhuraev/talosecs"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
