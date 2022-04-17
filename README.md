@@ -5,7 +5,7 @@ This is a Tower Defense game example based on [Talos ECS](https://github.com/Ole
 
 I made this simple game to show how can be used [Talos ECS](https://github.com/OlegDzhuraev/talosecs).
 
-## Denendencies
+## Dependencies
 1. [Talos ECS](https://github.com/OlegDzhuraev/talosecs)
 2. [Raylib Go bindings](https://github.com/gen2brain/raylib-go)
 3. [Go Perlin Noise](github.com/aquilax/go-perlin)
