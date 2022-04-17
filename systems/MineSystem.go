@@ -2,11 +2,11 @@ package systems
 
 import (
 	. "TowerDefenseTalosEcs/components"
-	"TowerDefenseTalosEcs/engine"
-	"TowerDefenseTalosEcs/engine/render"
-	"TowerDefenseTalosEcs/entities"
+	. "TowerDefenseTalosEcs/engine"
+	. "TowerDefenseTalosEcs/engine/render"
+	. "TowerDefenseTalosEcs/entities"
 	"TowerDefenseTalosEcs/settings"
-	. "github.com/OlegDzhuraev/talosecs"
+	ecs "github.com/OlegDzhuraev/talosecs"
 	rl "github.com/gen2brain/raylib-go/raylib"
 	"math"
 )
@@ -20,7 +20,7 @@ func (system *MineSystem) Init() {
 }
 
 func (system *MineSystem) Update() {
-	mines := FilterWith[*MineBuilding]()
+	mines := ecs.FilterWith[*MineBuilding]()
 	dTime := rl.GetFrameTime()
 
 	for _, mine := range mines {
@@ -34,17 +34,17 @@ func (system *MineSystem) Update() {
 				addValue = int32(math.Min(float64(mine.Field.Amount), float64(mine.AddPerSecond)))
 				mine.Field.Amount -= addValue
 
-				if fieldTr, ok := GetComponent[*engine.Transform](GetEntity(mine.Field)); ok {
-					scale := entities.GetResourceFieldScale(mine.Field.Amount)
+				if fieldTr, ok := ecs.GetComponent[*Transform](ecs.GetEntity(mine.Field)); ok {
+					scale := GetResourceFieldScale(mine.Field.Amount)
 					fieldTr.Scale = rl.Vector3{X: scale, Y: fieldTr.Scale.Y, Z: scale}
 				}
 
 				if mine.Field.Amount <= 0 {
-					e := GetEntity(mine)
-					if mr, ok := GetComponent[*render.ModelRenderer](e); ok {
+					e := ecs.GetEntity(mine)
+					if mr, ok := ecs.GetComponent[*ModelRenderer](e); ok {
 						mr.SetColor(rl.Gray)
 					}
-					DelComponent[*MineBuilding](e)
+					ecs.DelComponent[*MineBuilding](e)
 				}
 			}
 

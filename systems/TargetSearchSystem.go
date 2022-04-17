@@ -4,7 +4,7 @@ import (
 	. "TowerDefenseTalosEcs/components"
 	. "TowerDefenseTalosEcs/engine"
 	. "TowerDefenseTalosEcs/tags"
-	. "github.com/OlegDzhuraev/talosecs"
+	ecs "github.com/OlegDzhuraev/talosecs"
 	rl "github.com/gen2brain/raylib-go/raylib"
 	"math"
 )
@@ -13,27 +13,27 @@ type TargetSearchSystem struct {
 }
 
 func (system *TargetSearchSystem) Update() {
-	searchers, searchersTeams, searchersTransforms := FilterWith3[*TargetSearcher, *Team, *Transform]()
-	possibleTargets, possibleTargetsTeams, possibleTargetsTransforms := FilterWith3[*TargetTag, *Team, *Transform]()
+	searchers, searchersTeams, searchersTransforms := ecs.FilterWith3[*TargetSearcher, *Team, *Transform]()
+	possibleTargets, possibleTargetsTeams, possibleTargetsTransforms := ecs.FilterWith3[*TargetTag, *Team, *Transform]()
 
 	for i, s := range searchers {
 		searcherTr := searchersTransforms[i]
 
-		if IsAlive(s.Target) {
+		if ecs.IsAlive(s.Target) {
 			continue
 		}
 
 		searcherTeam := searchersTeams[i].Id
 
-		var trMap = map[*Transform]Entity{}
+		var trMap = map[*Transform]ecs.Entity{}
 
 		for i2, t := range possibleTargets {
 			tTeam := possibleTargetsTeams[i2].Id
 			tTr := possibleTargetsTransforms[i2]
 
-			targetEnt := GetEntity(t)
+			targetEnt := ecs.GetEntity(t)
 
-			if IsAlive(targetEnt) && searcherTeam != tTeam {
+			if ecs.IsAlive(targetEnt) && searcherTeam != tTeam {
 				trMap[tTr] = targetEnt
 			}
 		}
@@ -42,9 +42,9 @@ func (system *TargetSearchSystem) Update() {
 	}
 }
 
-func GetNearest(fromPos rl.Vector3, targets map[*Transform]Entity) Entity {
+func GetNearest(fromPos rl.Vector3, targets map[*Transform]ecs.Entity) ecs.Entity {
 	var minDist float32 = math.MaxFloat32
-	var nearestEnt Entity
+	var nearestEnt ecs.Entity
 
 	for tr, ent := range targets {
 		dist := rl.Vector3Distance(fromPos, tr.Position)

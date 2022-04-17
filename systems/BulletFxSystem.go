@@ -4,7 +4,7 @@ import (
 	. "TowerDefenseTalosEcs/components"
 	. "TowerDefenseTalosEcs/engine"
 	. "TowerDefenseTalosEcs/tags"
-	. "github.com/OlegDzhuraev/talosecs"
+	ecs "github.com/OlegDzhuraev/talosecs"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -17,13 +17,13 @@ func (system *BulletFxSystem) Init() {
 }
 
 func (system *BulletFxSystem) Update() {
-	_, transforms, movables := FilterWith3[*BulletFxTag, *Transform, *Movable]()
+	_, transforms, movables := ecs.FilterWith3[*BulletFxTag, *Transform, *Movable]()
 
 	for i, transform := range transforms {
 		movable := movables[i]
 
 		if rl.Vector3Distance(transform.Position, movable.Destination) < system.killDist {
-			KillEntity(GetEntity(transform))
+			ecs.KillEntity(ecs.GetEntity(transform))
 		}
 	}
 }

@@ -4,7 +4,7 @@ import (
 	. "TowerDefenseTalosEcs/components"
 	. "TowerDefenseTalosEcs/engine"
 	. "TowerDefenseTalosEcs/engine/render"
-	. "github.com/OlegDzhuraev/talosecs"
+	ecs "github.com/OlegDzhuraev/talosecs"
 	rl "github.com/gen2brain/raylib-go/raylib"
 	"math/rand"
 )
@@ -15,8 +15,8 @@ const minResources = 90
 const minResScale = 0.45
 const maxResScale = 1.8
 
-func NewResourceField(pos rl.Vector3) Entity {
-	e := NewEntity()
+func NewResourceField(pos rl.Vector3) ecs.Entity {
+	e := ecs.NewEntity()
 
 	rndResourcesPercent := rand.Float32()
 	resources := int32(LerpFloat(minResources, maxResources, rndResourcesPercent))

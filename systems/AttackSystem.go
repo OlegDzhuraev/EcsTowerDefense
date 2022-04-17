@@ -5,7 +5,7 @@ import (
 	. "TowerDefenseTalosEcs/engine"
 	. "TowerDefenseTalosEcs/entities"
 	. "TowerDefenseTalosEcs/oneframes"
-	. "github.com/OlegDzhuraev/talosecs"
+	ecs "github.com/OlegDzhuraev/talosecs"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -13,7 +13,7 @@ type AttackSystem struct {
 }
 
 func (system *AttackSystem) Update() {
-	transforms, attacks, targetSearchers := FilterWith3[*Transform, *Attack, *TargetSearcher]()
+	transforms, attacks, targetSearchers := ecs.FilterWith3[*Transform, *Attack, *TargetSearcher]()
 
 	for i, attack := range attacks {
 		if !attack.IsLoaded {
@@ -28,9 +28,9 @@ func (system *AttackSystem) Update() {
 
 		if attack.ReloadTimeLeft > 0 {
 			attack.ReloadTimeLeft -= rl.GetFrameTime()
-		} else if IsAlive(target) {
+		} else if ecs.IsAlive(target) {
 			targetPos := rl.Vector3{}
-			if targetTransform, ok := GetComponent[*Transform](target); ok { // todo to attack separated system
+			if targetTransform, ok := ecs.GetComponent[*Transform](target); ok { // todo to attack separated system
 				dist := rl.Vector3Distance(transform.Position, targetTransform.Position)
 
 				targetPos = targetTransform.Position
@@ -39,12 +39,12 @@ func (system *AttackSystem) Update() {
 				}
 			}
 
-			if damageable, ok := GetComponent[*Damageable](target); ok {
+			if damageable, ok := ecs.GetComponent[*Damageable](target); ok {
 				damageable.Health = rl.Clamp(damageable.Health-attack.Damage, 0, damageable.MaxHealth)
 				attack.ReloadTimeLeft = attack.ReloadTime
 
 				NewBulletEffect(transform.Position, targetPos)
-				GetEntity(attack).OneFrame(&ShootOneFrame{Position: transform.Position})
+				ecs.GetEntity(attack).OneFrame(&ShootOneFrame{Position: transform.Position})
 			}
 		}
 	}

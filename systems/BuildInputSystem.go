@@ -4,8 +4,8 @@ import (
 	. "TowerDefenseTalosEcs/engine"
 	"TowerDefenseTalosEcs/oneframes"
 	. "TowerDefenseTalosEcs/settings"
-	"TowerDefenseTalosEcs/signals"
-	"TowerDefenseTalosEcs/tags"
+	. "TowerDefenseTalosEcs/signals"
+	. "TowerDefenseTalosEcs/tags"
 	ecs "github.com/OlegDzhuraev/talosecs"
 	rl "github.com/gen2brain/raylib-go/raylib"
 	"math"
@@ -51,7 +51,7 @@ func (system *BuildInputSystem) Update() {
 		system.isMoneyEnough = PlayerResources[building.PriceResource] >= building.Price
 
 		if system.isMoneyEnough {
-			playersTransforms, _ := ecs.FilterWith2[*Transform, *tags.PlayerOwnedTag]()
+			playersTransforms, _ := ecs.FilterWith2[*Transform, *PlayerOwnedTag]()
 
 			var minDist float32 = math.MaxFloat32
 
@@ -77,7 +77,7 @@ func (system *BuildInputSystem) Update() {
 					tr.Position = system.WorldCursorPos
 				}
 
-				ecs.TryAddSignal(&signals.SpawnFxSignal{Position: system.WorldCursorPos})
+				ecs.TryAddSignal(&SpawnFxSignal{Position: system.WorldCursorPos})
 
 				PlayerResources[building.PriceResource] -= building.Price
 

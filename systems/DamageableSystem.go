@@ -3,24 +3,24 @@ package systems
 import (
 	. "TowerDefenseTalosEcs/components"
 	"TowerDefenseTalosEcs/settings"
-	. "github.com/OlegDzhuraev/talosecs"
+	ecs "github.com/OlegDzhuraev/talosecs"
 )
 
 type DeathSystem struct {
 }
 
 func (system *DeathSystem) Update() {
-	damageables := FilterWith[*Damageable]()
+	damageables := ecs.FilterWith[*Damageable]()
 
 	for _, damageable := range damageables {
 		if damageable.Health <= 0 {
-			e := GetEntity(damageable)
+			e := ecs.GetEntity(damageable)
 
-			if sc, ok := GetComponent[*ScoreForDestroy](e); ok {
+			if sc, ok := ecs.GetComponent[*ScoreForDestroy](e); ok {
 				settings.Score += uint(sc.Score)
 			}
 
-			KillEntity(e)
+			ecs.KillEntity(e)
 		}
 	}
 }

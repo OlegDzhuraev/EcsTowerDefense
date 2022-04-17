@@ -5,12 +5,12 @@ import (
 	. "TowerDefenseTalosEcs/engine"
 	. "TowerDefenseTalosEcs/engine/render"
 	. "TowerDefenseTalosEcs/tags"
-	. "github.com/OlegDzhuraev/talosecs"
+	ecs "github.com/OlegDzhuraev/talosecs"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-func NewBulletEffect(pos rl.Vector3, target rl.Vector3) Entity {
-	e := NewEntity()
+func NewBulletEffect(pos rl.Vector3, target rl.Vector3) ecs.Entity {
+	e := ecs.NewEntity()
 	tr := NewTransform(pos)
 	tr.Scale = rl.Vector3{X: 0.2, Y: 0.2, Z: 0.2}
 
