@@ -2,7 +2,7 @@ package systems
 
 import (
 	. "TowerDefenseTalosEcs/engine"
-	"TowerDefenseTalosEcs/oneframes"
+	. "TowerDefenseTalosEcs/oneframes"
 	. "TowerDefenseTalosEcs/settings"
 	. "TowerDefenseTalosEcs/signals"
 	. "TowerDefenseTalosEcs/tags"
@@ -12,32 +12,33 @@ import (
 )
 
 type BuildInputSystem struct {
-	BuildEnabled   bool
+	buildEnabled bool
+	selectedId   int
+
+	worldCursorPos rl.Vector3
+
 	isMoneyEnough  bool
 	canBuildByDist bool
-	WorldCursorPos rl.Vector3
-
-	SelectedId int
 }
 
 func (system *BuildInputSystem) Update() {
 	for i := 1; i < 10; i++ {
 		realId := i - 1
 		if rl.IsKeyPressed(NumKeys[i]) && realId < len(BuildingMakers) {
-			system.SelectedId = realId
-			building := BuildingMakers[system.SelectedId]
+			system.selectedId = realId
+			building := BuildingMakers[system.selectedId]
 
 			if PlayerResources[building.PriceResource] >= building.Price {
-				system.BuildEnabled = true
+				system.buildEnabled = true
 			}
 		}
 	}
 
-	if system.BuildEnabled && rl.IsMouseButtonPressed(rl.MouseRightButton) {
-		system.BuildEnabled = false
+	if system.buildEnabled && rl.IsMouseButtonPressed(rl.MouseRightButton) {
+		system.buildEnabled = false
 	}
 
-	if system.BuildEnabled {
+	if system.buildEnabled {
 		g0 := rl.Vector3{X: -100.0, Z: -100.0}
 		g1 := rl.Vector3{X: -500.0, Z: 100.0}
 		g2 := rl.Vector3{X: 100.0, Z: 100.0}
@@ -45,9 +46,9 @@ func (system *BuildInputSystem) Update() {
 		ray := rl.GetMouseRay(rl.GetMousePosition(), MainCamera)
 
 		groundHitInfo := rl.GetRayCollisionQuad(ray, g0, g1, g2, g3)
-		system.WorldCursorPos = groundHitInfo.Point
+		system.worldCursorPos = groundHitInfo.Point
 
-		building := BuildingMakers[system.SelectedId]
+		building := BuildingMakers[system.selectedId]
 		system.isMoneyEnough = PlayerResources[building.PriceResource] >= building.Price
 
 		if system.isMoneyEnough {
@@ -56,7 +57,7 @@ func (system *BuildInputSystem) Update() {
 			var minDist float32 = math.MaxFloat32
 
 			for _, tr := range playersTransforms {
-				dist := rl.Vector2Distance(rl.Vector2{X: system.WorldCursorPos.X, Y: system.WorldCursorPos.Z}, rl.Vector2{X: tr.Position.X, Y: tr.Position.Z})
+				dist := rl.Vector2Distance(rl.Vector2{X: system.worldCursorPos.X, Y: system.worldCursorPos.Z}, rl.Vector2{X: tr.Position.X, Y: tr.Position.Z})
 
 				if dist < minDist {
 					minDist = dist
@@ -66,22 +67,19 @@ func (system *BuildInputSystem) Update() {
 			system.canBuildByDist = minDist < 7.5
 
 			if rl.IsMouseButtonDown(rl.MouseLeftButton) && system.canBuildByDist {
-				ent := BuildingMakers[system.SelectedId].Action()
+				ent := BuildingMakers[system.selectedId].Action()
 
-				// todo сделать систему, которая по SpawnFxSignal будет проставлять позицию?
-				// можно этот сигнал вешать на сам объект и фильтровать по нему. Тогда не нужен GetComponent
+				ent.OneFrame(&MineInitOneFrame{Position: system.worldCursorPos})
 
-				ent.OneFrame(&oneframes.MineInitOneFrame{Position: system.WorldCursorPos})
-
-				if tr, ok := ecs.GetComponent[*Transform](ent); ok {
-					tr.Position = system.WorldCursorPos
+				if tr, ok := ecs.GetComponent[*Transform](ent); ok { // todo refactor, move to a separated system
+					tr.Position = system.worldCursorPos
 				}
 
-				ecs.TryAddSignal(&SpawnFxSignal{Position: system.WorldCursorPos})
+				ecs.TryAddSignal(&SpawnFxSignal{Position: system.worldCursorPos})
 
 				PlayerResources[building.PriceResource] -= building.Price
 
-				system.BuildEnabled = false
+				system.buildEnabled = false
 			}
 		}
 	}
@@ -90,13 +88,13 @@ func (system *BuildInputSystem) Update() {
 }
 
 func (system BuildInputSystem) drawBuildMode() {
-	if system.BuildEnabled {
+	if system.buildEnabled {
 		color := rl.Yellow
 
 		if !system.canBuildByDist {
 			color = rl.Red
 		}
 
-		rl.DrawSphere(system.WorldCursorPos, 0.75, color)
+		rl.DrawSphere(system.worldCursorPos, 0.75, color)
 	}
 }

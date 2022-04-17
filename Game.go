@@ -16,6 +16,12 @@ var mainLayer *ecs.Layer
 var uiRenderLayer *ecs.Layer
 var postProcessLayer *ecs.Layer
 
+func makeLayers() {
+	mainLayer = ecs.NewLayer()
+	uiRenderLayer = ecs.NewLayer()
+	postProcessLayer = ecs.NewLayer()
+}
+
 func addEngineSystems() {
 	mainLayer.Add(&engine.ChildrenSystem{})
 	mainLayer.Add(&engine.TimedDestroySystem{})
@@ -24,20 +30,8 @@ func addEngineSystems() {
 	mainLayer.Add(&render.ModelRenderSystem{})
 }
 
-func mainInit() {
-	rl.InitWindow(int32(settings.ScreenSize.X), int32(settings.ScreenSize.Y), "They are debiches")
-	rl.SetTargetFPS(2000)
-	rand.Seed(time.Now().UnixNano())
-}
-
-func main() {
-	mainLayer = ecs.NewLayer()
-	uiRenderLayer = ecs.NewLayer()
-	postProcessLayer = ecs.NewLayer()
-
-	addEngineSystems()
-
-	mainLayer.Add(&systems.CameraControls{CameraSpeed: 10})
+func addGameSystems() {
+	mainLayer.Add(&systems.CameraControls{})
 	mainLayer.Add(&systems.BuildInputSystem{})
 	mainLayer.Add(&systems.MinesInitSystem{})
 
@@ -62,16 +56,29 @@ func main() {
 	uiRenderLayer.Add(&ui.HealthbarsDrawSystem{})
 	uiRenderLayer.Add(&ui.BuildButtonsDrawSystem{})
 	uiRenderLayer.Add(&ui.GameRulesDrawSystem{})
+	uiRenderLayer.Add(&ui.DebugUiSystem{})
 
 	postProcessLayer.Add(&systems.PostProcessSystem{})
+}
 
-	mainInit()
+func gameInit() {
+	rl.InitWindow(int32(settings.ScreenSize.X), int32(settings.ScreenSize.Y), "Tower defense Talos ECS")
+	rl.SetTargetFPS(2000)
+	rand.Seed(time.Now().UnixNano())
 
 	ecs.AddLayer(mainLayer)
 
 	uiRenderLayer.Init()
 	postProcessLayer.Init()
+
 	ecs.Init()
+}
+
+func main() {
+	makeLayers()
+	addEngineSystems()
+	addGameSystems()
+	gameInit()
 
 	for !rl.WindowShouldClose() {
 		rl.BeginTextureMode(systems.RenderTexture)
@@ -84,7 +91,6 @@ func main() {
 		rl.BeginDrawing()
 		postProcessLayer.Update()
 		uiRenderLayer.Update()
-		rl.DrawFPS(10, 128)
 		rl.EndDrawing()
 	}
 

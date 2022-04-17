@@ -10,29 +10,29 @@ import (
 )
 
 type EnemySpawnSystem struct {
-	Timer              Timer
-	ActualHive         int32
+	timer              Timer
+	actualHive         int32
 	minRespawnTime     float32
 	timeReducePerSpawn float32
 }
 
 func (system *EnemySpawnSystem) Init() {
-	system.Timer = Timer{Time: 5}
+	system.timer = Timer{Time: 5}
 	system.minRespawnTime = 1
 	system.timeReducePerSpawn = 0.1
 }
 
 func (system *EnemySpawnSystem) Update() {
-	system.Timer.DoTickUntilReady()
+	system.timer.DoTickUntilReady()
 
-	if system.Timer.IsReady() {
+	if system.timer.IsReady() {
 		hives, transforms := ecs.FilterWith2[*HiveTag, *Transform]()
 
 		var hivesAmount int32 = 0
 		var newActualHive int32 = 0
 
 		for i := range hives {
-			if int32(i) == system.ActualHive {
+			if int32(i) == system.actualHive {
 				enemyEnt := NewEnemy()
 				tr := transforms[i]
 
@@ -41,7 +41,7 @@ func (system *EnemySpawnSystem) Update() {
 					ecs.TryAddSignal(&signals.SpawnFxSignal{Position: tr.Position})
 				}
 
-				newActualHive = system.ActualHive + 1
+				newActualHive = system.actualHive + 1
 			}
 
 			hivesAmount++
@@ -51,8 +51,8 @@ func (system *EnemySpawnSystem) Update() {
 			newActualHive = 0
 		}
 
-		system.ActualHive = newActualHive
-		system.Timer.Time = rl.Clamp(system.Timer.Time-system.timeReducePerSpawn, system.minRespawnTime, 999)
-		system.Timer.Reset()
+		system.actualHive = newActualHive
+		system.timer.Time = rl.Clamp(system.timer.Time-system.timeReducePerSpawn, system.minRespawnTime, 999)
+		system.timer.Reset()
 	}
 }

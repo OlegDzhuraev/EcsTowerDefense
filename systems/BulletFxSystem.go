@@ -9,11 +9,11 @@ import (
 )
 
 type BulletFxSystem struct {
-	killDist float32
+	dieDist float32
 }
 
 func (system *BulletFxSystem) Init() {
-	system.killDist = 0.2
+	system.dieDist = 0.2
 }
 
 func (system *BulletFxSystem) Update() {
@@ -22,7 +22,7 @@ func (system *BulletFxSystem) Update() {
 	for i, transform := range transforms {
 		movable := movables[i]
 
-		if rl.Vector3Distance(transform.Position, movable.Destination) < system.killDist {
+		if rl.Vector3Distance(transform.Position, movable.Destination) < system.dieDist {
 			ecs.KillEntity(ecs.GetEntity(transform))
 		}
 	}

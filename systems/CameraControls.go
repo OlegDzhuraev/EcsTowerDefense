@@ -7,10 +7,12 @@ import (
 )
 
 type CameraControls struct {
-	CameraSpeed float32
+	cameraSpeed float32
 }
 
 func (system *CameraControls) Init() {
+	system.cameraSpeed = 10
+
 	settings.MainCamera = rl.Camera3D{
 		Up:         rl.Vector3{Y: 1},
 		Position:   rl.Vector3{Y: 10, Z: 10},
@@ -23,7 +25,7 @@ func (system *CameraControls) Update() {
 	dir := rl.Vector3{X: HorizontalAxis.GetValue(), Z: -VerticalAxis.GetValue()}
 	camPos := settings.MainCamera.Position
 	camTarget := settings.MainCamera.Target
-	dirScaled := rl.Vector3Scale(dir, system.CameraSpeed*rl.GetFrameTime())
+	dirScaled := rl.Vector3Scale(dir, system.cameraSpeed*rl.GetFrameTime())
 	settings.MainCamera.Position = rl.Vector3Add(camPos, dirScaled)
 	settings.MainCamera.Target = rl.Vector3Add(camTarget, dirScaled)
 

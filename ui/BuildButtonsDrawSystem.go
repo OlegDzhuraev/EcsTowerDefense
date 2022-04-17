@@ -7,11 +7,11 @@ import (
 )
 
 type BuildButtonsDrawSystem struct {
-	ScreenPos rl.Vector2
+	screenPos rl.Vector2
 }
 
 func (system *BuildButtonsDrawSystem) Init() {
-	system.ScreenPos = rl.Vector2{X: ScreenSize.X / 2, Y: ScreenSize.Y - 60}
+	system.screenPos = rl.Vector2{X: ScreenSize.X / 2, Y: ScreenSize.Y - 60}
 }
 
 func (system *BuildButtonsDrawSystem) Update() {
@@ -25,10 +25,10 @@ func (system *BuildButtonsDrawSystem) Update() {
 			color = rl.Red
 		}
 
-		posX := int32(system.ScreenPos.X + float32(offset*i-totalOffset))
+		posX := int32(system.screenPos.X + float32(offset*i-totalOffset))
 		text := "[" + strconv.Itoa(i+1) + "] " + bm.Name
 		priceText := "Price: " + strconv.Itoa(int(bm.Price))
-		rl.DrawText(text, posX, int32(system.ScreenPos.Y), 16, color)
-		rl.DrawText(priceText, posX, int32(system.ScreenPos.Y+20), 16, color)
+		rl.DrawText(text, posX, int32(system.screenPos.Y), 16, color)
+		rl.DrawText(priceText, posX, int32(system.screenPos.Y+20), 16, color)
 	}
 }

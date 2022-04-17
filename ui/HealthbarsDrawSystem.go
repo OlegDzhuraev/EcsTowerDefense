@@ -4,8 +4,8 @@ import (
 	. "TowerDefenseTalosEcs/components"
 	. "TowerDefenseTalosEcs/engine"
 	"TowerDefenseTalosEcs/settings"
-	"TowerDefenseTalosEcs/tags"
-	. "github.com/OlegDzhuraev/talosecs"
+	. "TowerDefenseTalosEcs/tags"
+	ecs "github.com/OlegDzhuraev/talosecs"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -22,13 +22,13 @@ func (system *HealthbarsDrawSystem) Init() {
 }
 
 func (system *HealthbarsDrawSystem) Update() {
-	damageables, transforms := FilterWith2[*Damageable, *Transform]()
+	damageables, transforms := ecs.FilterWith2[*Damageable, *Transform]()
 
 	for i, damageable := range damageables {
 		tr := transforms[i]
 
 		color := rl.Red
-		if _, ok := GetComponent[*tags.PlayerOwnedTag](GetEntity(damageable)); ok {
+		if _, ok := ecs.GetComponent[*PlayerOwnedTag](ecs.GetEntity(damageable)); ok {
 			color = rl.Green
 		}
 
