@@ -11,7 +11,7 @@ import (
 	"math"
 )
 
-type BuildInput struct {
+type BuildInputSystem struct {
 	BuildEnabled   bool
 	isMoneyEnough  bool
 	canBuildByDist bool
@@ -20,7 +20,7 @@ type BuildInput struct {
 	SelectedId int
 }
 
-func (system *BuildInput) Update() {
+func (system *BuildInputSystem) Update() {
 	for i := 1; i < 10; i++ {
 		realId := i - 1
 		if rl.IsKeyPressed(NumKeys[i]) && realId < len(BuildingMakers) {
@@ -89,7 +89,7 @@ func (system *BuildInput) Update() {
 	system.drawBuildMode()
 }
 
-func (system BuildInput) drawBuildMode() {
+func (system BuildInputSystem) drawBuildMode() {
 	if system.BuildEnabled {
 		color := rl.Yellow
 

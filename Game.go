@@ -38,7 +38,7 @@ func main() {
 	addEngineSystems()
 
 	mainLayer.Add(&systems.CameraControls{CameraSpeed: 10})
-	mainLayer.Add(&systems.BuildInput{})
+	mainLayer.Add(&systems.BuildInputSystem{})
 	mainLayer.Add(&systems.MinesInitSystem{})
 
 	mainLayer.Add(&systems.EnemySpawnSystem{})
