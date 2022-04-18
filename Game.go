@@ -1,10 +1,10 @@
 package main
 
 import (
-	"TowerDefenseTalosEcs/engine"
-	"TowerDefenseTalosEcs/engine/render"
+	. "TowerDefenseTalosEcs/engine"
+	. "TowerDefenseTalosEcs/engine/render"
 	"TowerDefenseTalosEcs/settings"
-	"TowerDefenseTalosEcs/systems"
+	. "TowerDefenseTalosEcs/systems"
 	"TowerDefenseTalosEcs/ui"
 	ecs "github.com/OlegDzhuraev/talosecs"
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -23,42 +23,45 @@ func makeLayers() {
 }
 
 func addEngineSystems() {
-	mainLayer.Add(&engine.ChildrenSystem{})
-	mainLayer.Add(&engine.TimedDestroySystem{})
-	mainLayer.Add(&engine.CurveScaleSystem{})
-
-	mainLayer.Add(&render.ModelRenderSystem{})
+	mainLayer.
+		Add(&ChildrenSystem{}).
+		Add(&TimedDestroySystem{}).
+		Add(&CurveScaleSystem{}).
+		Add(&ModelRenderSystem{})
 }
 
 func addGameSystems() {
-	mainLayer.Add(&systems.CameraControls{})
-	mainLayer.Add(&systems.BuildInputSystem{})
-	mainLayer.Add(&systems.MinesInitSystem{})
+	mainLayer.
+		Add(&CameraControlsSystem{}).
+		Add(&BuildInputSystem{}).
+		Add(&MinesInitSystem{}).
+		Add(&EnemySpawnSystem{}).
+		Add(&TargetSearchSystem{}).
+		Add(&RemoveTargetSystem{}).
+		Add(&EnemySpawnSystem{}).
+		Add(&TargetSearchSystem{}).
+		Add(&RemoveTargetSystem{}).
+		Add(&AttackSystem{}).
+		Add(&MoveSystem{}).
+		Add(&DeathSystem{}).
+		Add(&MineSystem{}).
+		Add(&EnemyMoveSystem{}).
+		Add(&BulletFxSystem{}).
+		Add(&BuildEffectSystem{}).
+		Add(&ShootEffectSystem{}).
+		Add(&GameRulesSystem{}).
+		Add(&GenerateResourcesSystem{}).
+		Add(&HivesSystem{})
 
-	mainLayer.Add(&systems.EnemySpawnSystem{})
-	mainLayer.Add(&systems.TargetSearchSystem{})
-	mainLayer.Add(&systems.RemoveTargetSystem{})
+	uiRenderLayer.
+		Add(&ui.ResourcesDrawSystem{}).
+		Add(&ui.HealthbarsDrawSystem{}).
+		Add(&ui.BuildButtonsDrawSystem{}).
+		Add(&ui.GameRulesDrawSystem{}).
+		Add(&ui.DebugUiSystem{})
 
-	mainLayer.Add(&systems.AttackSystem{})
-	mainLayer.Add(&systems.MoveSystem{})
-	mainLayer.Add(&systems.DeathSystem{})
-	mainLayer.Add(&systems.MineSystem{})
-	mainLayer.Add(&systems.EnemyMoveSystem{})
-	mainLayer.Add(&systems.BulletFxSystem{})
-
-	mainLayer.Add(&systems.BuildEffectSystem{})
-	mainLayer.Add(&systems.ShootEffectSystem{})
-	mainLayer.Add(&systems.GameRulesSystem{})
-	mainLayer.Add(&systems.GenerateResourcesSystem{})
-	mainLayer.Add(&systems.HivesSystem{})
-
-	uiRenderLayer.Add(&ui.ResourcesDrawSystem{})
-	uiRenderLayer.Add(&ui.HealthbarsDrawSystem{})
-	uiRenderLayer.Add(&ui.BuildButtonsDrawSystem{})
-	uiRenderLayer.Add(&ui.GameRulesDrawSystem{})
-	uiRenderLayer.Add(&ui.DebugUiSystem{})
-
-	postProcessLayer.Add(&systems.PostProcessSystem{})
+	postProcessLayer.
+		Add(&PostProcessSystem{})
 }
 
 func gameInit() {
@@ -81,7 +84,7 @@ func main() {
 	gameInit()
 
 	for !rl.WindowShouldClose() {
-		rl.BeginTextureMode(systems.RenderTexture)
+		rl.BeginTextureMode(RenderTexture)
 		rl.ClearBackground(settings.ClearColor)
 		rl.BeginMode3D(settings.MainCamera)
 		ecs.Update()

@@ -1,5 +1,7 @@
 github.com/OlegDzhuraev/talosecs v0.3.1 h1:oigWPP9gIFBYhJVgm/lrsJpE/gt8Bwx1/ongzczgS30=
 github.com/OlegDzhuraev/talosecs v0.3.1/go.mod h1:Hdb17A4hDWaXuQFjT7x+n00/G82t4qT2LI/RLFvxTpA=
+github.com/OlegDzhuraev/talosecs v0.3.2 h1:aRRJ/+wTtgmKb9Xy3BVf44Mv6AuBHumUQ2OjHiduks8=
+github.com/OlegDzhuraev/talosecs v0.3.2/go.mod h1:Hdb17A4hDWaXuQFjT7x+n00/G82t4qT2LI/RLFvxTpA=
 github.com/aquilax/go-perlin v1.1.0 h1:Gg+3jQ24wT4Y5GI7TCRLmYarzUG0k+n/JATFqOimb7s=
 github.com/aquilax/go-perlin v1.1.0/go.mod h1:z9Rl7EM4BZY0Ikp2fEN1I5mKSOJ26HQpk0O2TBdN2HE=
 github.com/gen2brain/raylib-go/raylib v0.0.0-20220324192015-efabb001d2f1 h1:fVwOqFHoAMfdBytMHqiToHOwotB7/OX7ntEhyurnF3c=

@@ -6,11 +6,11 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-type CameraControls struct {
+type CameraControlsSystem struct {
 	cameraSpeed float32
 }
 
-func (system *CameraControls) Init() {
+func (system *CameraControlsSystem) Init() {
 	system.cameraSpeed = 10
 
 	settings.MainCamera = rl.Camera3D{
@@ -21,7 +21,7 @@ func (system *CameraControls) Init() {
 	}
 }
 
-func (system *CameraControls) Update() {
+func (system *CameraControlsSystem) Update() {
 	dir := rl.Vector3{X: HorizontalAxis.GetValue(), Z: -VerticalAxis.GetValue()}
 	camPos := settings.MainCamera.Position
 	camTarget := settings.MainCamera.Target
